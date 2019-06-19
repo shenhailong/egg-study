@@ -43,20 +43,6 @@ module.exports = appInfo => {
     }
   }
 
-  // config.validator = {
-  //   open: 'zh-CN',
-  //   languages: {
-  //     'zh-CN': {
-  //       required: '必须填 %s 字段'
-  //     }
-  //   },
-  //   async formate(ctx, error) {
-  //     console.log(error)
-  //     ctx.type = 'json'
-  //     ctx.status = 400
-  //     ctx.body = error
-  //   }
-  // }
 
   config.security = {
     csrf: {
@@ -64,7 +50,43 @@ module.exports = appInfo => {
     }
   }
 
-  
+  config.jwt = {
+    secret: '123456',
+    enable: true,
+    ignore(ctx) {
+      // return true
+      // const regs = [/^\/api\/v1/gi]
+
+      // if (regs.some(reg => reg.test(ctx.path))) {
+      //   info('[JWT] -> %s', ctx.path)
+      //   return true
+      // }
+      const paths = [
+        '/api/v1/signin',
+        '/api/v1/signup'
+      ]
+      if (DEV) {
+        const tip = `${chalk.yellow('[ JWT ]')} --> ${
+          R.contains(ctx.path, paths)
+            ? chalk.green(ctx.path)
+            : chalk.red(ctx.path)
+        }`
+        console.log(tip)
+      }
+      // info(
+      //   '[JWT] -> %s',
+      //   R.contains(ctx.path, paths)
+      //     ? chalk.green(ctx.path)
+      //     : chalk.red(ctx.path)
+      // )
+      return R.contains(ctx.path, paths)
+    }
+  }
+
+  config.passportLocal = {
+    usernameField: 'email',
+    passwordField: 'password'
+  }
 
   // add your user config here
   const userConfig = {

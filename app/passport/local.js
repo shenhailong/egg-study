@@ -4,7 +4,7 @@ module.exports = async (ctx, { username, password }) => {
   const email = username
   await ctx.verify('user.signin', 'body')
   const user = await ctx.model.User.Auth(email, password)
-  ctx.assert(user, 400, '用户或密码错误')
+  ctx.assert(user, 400, '用户或密码错误1')
   const raw_user = R.omit(
     ['password', 'created_at', 'updated_at'],
     user.toJSON()
@@ -16,7 +16,7 @@ module.exports = async (ctx, { username, password }) => {
 }
 
 if(!user){
-  ctx.throw(400, '用户名或者密码错误')
+  ctx.throw(400, '用户名或者密码错误2')
 }
 
-ctx.assert(user, 400, '用户名或者密码错误')
+ctx.assert(user, 400, '用户名或者密码错误3')

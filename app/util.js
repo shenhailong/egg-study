@@ -30,6 +30,7 @@ function mountPassportToController(keys, passport, controller) {
       // @see https://github.com/eggjs/egg-passport/blob/0afce5b0d5fbc107730e10dad6aff915c03cf079/lib/passport.js#L41
     })
   }, keys)
+  console.log(controller)
 }
 
 function installPassport(passport, { verify }) {
